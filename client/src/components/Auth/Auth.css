@@ -1,0 +1,13 @@
+.auth-form {
+  width: 550px;
+  margin: 0 auto;
+  border: 1px solid var(--bs-gray-500);
+  border-radius: 5px;
+  padding: 30px;
+  text-align: left;
+}
+
+.auth-form__header {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
