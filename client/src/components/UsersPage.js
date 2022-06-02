@@ -34,13 +34,15 @@ function UsersPage(props) {
     { field: 'name', headerName: 'Name', width: 130 },
     { field: 'mail', headerName: 'Mail', width: 130 },
     { field: 'status', headerName: 'Status', width: 130 },
-    { field: 'createdDate', headerName: 'Created', width: 250 },
-    { field: 'lastVisit', headerName: 'Last visit', width: 250 },
+    { field: 'createddate', headerName: 'Created', width: 250 },
+    { field: 'lastvisit', headerName: 'Last visit', width: 250 },
   ];
   
   function handleSelection(selectedIndexes, details) {
     const selected = [];
-    selectedIndexes.forEach(index => selected.push(users[index]));
+    selectedIndexes.forEach(index => selected.push(
+      users.find(user => user.id === index)
+    ));
     setSelectedUsers(selected);
   }
 
@@ -56,7 +58,7 @@ function UsersPage(props) {
       selectedUsers.forEach(user => {
         usersService.removeUser(user);
 
-        if (props.currentUser === user) {
+        if (props.currentUser.id === user.id) {
           isCurrentUserRemoved = true;
         }
       });
@@ -85,7 +87,7 @@ function UsersPage(props) {
       selectedUsers.forEach(user => {
         usersService.blockUser(user);
 
-        if (props.currentUser === user) {
+        if (props.currentUser.id === user.id) {
           isCurrentUserBlocked = true;
         }
       });
@@ -125,7 +127,7 @@ function UsersPage(props) {
         </Button>
       </ButtonGroup>
 
-      <div style={{ height: 400, maxWidth: 1010, margin: "0 auto" }}>
+      <div style={{ height: 500, maxWidth: 1030, margin: "0 auto" }}>
         <DataGrid
           rows={users}
           columns={columns}
