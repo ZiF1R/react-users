@@ -4,11 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRoutes = require("./user.routes");
 
-const port = 3001;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use("/api", userRoutes);
 
-app.listen(port, () => console.log(`React-users app listening on http://localhost:${port}`));
+app.listen(port, () => console.log(`React-users app is running on ${port}`));
