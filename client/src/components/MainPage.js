@@ -1,23 +1,33 @@
-import { Outlet } from 'react-router-dom';
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Outlet, Link, useNavigate } from 'react-router-dom';
+import { Button } from "@mui/material"
 import "./MainPage.css";
-import { useState } from 'react';
 
-function MainPage() {
-  const [token, setToken] = useState();
+function MainPage(props) {
+  const navigate = useNavigate();
+  const currentUser = props.currentUser;
+
+  function logout() {
+    props.setCurrentUser(null);
+    navigate("/sign-in");
+  }
 
   return (
     <>
-      <Navbar bg="light" sticky="top" variant="light">
-        <Container>
-        <Navbar.Brand href="/">React users</Navbar.Brand>
-        <Nav className="me-auto">
-          <Nav.Link disabled={token === undefined} href="/users">Users</Nav.Link>
-          <Nav.Link href="/sign-in">Sign in</Nav.Link>
-          <Nav.Link href="/sign-up">Sign up</Nav.Link>
-        </Nav>
-        </Container>
-      </Navbar>
+      <nav className="nav">
+        {
+          currentUser === null ?
+          (<>
+            <Link className="nav__link" to="/sign-in">Sign in</Link>
+            <Link className="nav__link" to="/sign-up">Sign up</Link>
+          </>):
+            (<>
+              <Link className="nav__link" to="/users">Users</Link>
+              <Button onClick={logout} style={{ right: 20, position: "absolute" }} variant="contained">
+                Logout
+              </Button>
+            </>)
+        }
+      </nav>
 
       <main className="main-container">
         <Outlet />

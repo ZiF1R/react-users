@@ -1,3 +1,29 @@
 .main-container {
   margin-top: 60px;
 }
+
+.nav {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background: #f8f8f8;
+  padding: 20px;
+  box-shadow: -5px -4px 6px 5px #ccc;
+}
+
+.nav__link {
+  height: 100%;
+  padding: 0 8px;
+  color: #282c34;
+  text-decoration: none;
+}
+
+.nav__link_disabled {
+  pointer-events: none;
+  color: #999;
+  cursor: auto;
+}
+
+.nav__link_disabled:hover {
+  color: #999;
+}

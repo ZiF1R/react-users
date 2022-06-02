@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { FormControl, Button, TextField, InputLabel, OutlinedInput } from '@mui/material';
+import usersService from '../../services/users';
 import "./Auth.css";
 
 function Registration() {
@@ -7,33 +8,65 @@ function Registration() {
     [mail, setMail] = useState(""),
     [password, setPassword] = useState("");
 
-  function submit() {
-    fetch(`/api/users?name=${name}&mail=${mail}&password=${password}`);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    usersService
+      .addUser({ name, mail, password })
+      .then(response => {
+        if (response.status === 200) {
+          setName("");
+          setMail("");
+          setPassword("");
+        }
+      });
   }
 
   return (
-    <Form className="auth-form" onSubmit={() => submit()}>
+    <form className="auth-form" onSubmit={handleSubmit}>
       <h2 className="auth-form__header">Registration</h2>
 
-      <Form.Group className="mb-3" controlId="formBasicName">
-        <Form.Label>Name</Form.Label>
-        <Form.Control value={name} onChange={(e) => setName(e.target.value)} name="name" required type="text" placeholder="Name" />
-      </Form.Group>
+      <TextField
+        required
+        margin="normal"
+        type="text"
+        size="small"
+        name="name"
+        autoComplete="off"
+        label="Name"
+        variant="outlined"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control value={mail} onChange={(e) => setMail(e.target.value)} name="mail" required type="email" placeholder="Enter email" />
-      </Form.Group>
+      <TextField
+        required
+        margin="normal"
+        type="email"
+        size="small"
+        name="mail"
+        autoComplete="off"
+        label="Enter email"
+        variant="outlined"
+        value={mail}
+        onChange={(e) => setMail(e.target.value)}
+      />
 
-      <Form.Group className="mb-4" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control value={password} onChange={(e) => setPassword(e.target.value)} name="password" required type="password" placeholder="Password" />
-      </Form.Group>
+      <FormControl margin="normal" variant="outlined" size="small" required>
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            type="password"
+          />
+      </FormControl>
 
-      <Button variant="primary" type="submit">
+      <Button variant="contained" className="button_submit" type="submit">
         Submit
       </Button>
-    </Form>
+    </form>
   );
 }
 
